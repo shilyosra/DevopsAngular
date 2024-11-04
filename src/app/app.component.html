@@ -1,0 +1,44 @@
+<div class="container" style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px;">
+  <h2 style="text-align: center; color: #4CAF50; margin-bottom: 20px;">Foyer List</h2>
+  
+  <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+    <thead>
+      <tr style="background-color: #f2f2f2; color: #333; font-weight: bold;">
+        <th style="padding: 10px; border: 1px solid #ddd;">Foyer ID</th>
+        <th style="padding: 10px; border: 1px solid #ddd;">Name</th>
+        <th style="padding: 10px; border: 1px solid #ddd;">Capacity</th>
+        <th style="padding: 10px; border: 1px solid #ddd;">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let foyer of foyers" style="text-align: center;">
+        <td style="padding: 8px; border: 1px solid #ddd;">{{ foyer.idFoyer }}</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">{{ foyer.nomFoyer }}</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">{{ foyer.capaciteFoyer }}</td>
+        <td style="padding: 8px; border: 1px solid #ddd;">
+          <button (click)="deleteloadFoyers(foyer.idFoyer!)" style="padding: 6px 12px; background-color: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer;">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 style="color: #4CAF50; margin-bottom: 15px;">Add New Foyer</h3>
+  <form (ngSubmit)="addFoyer()" style="display: flex; flex-direction: column; gap: 15px;">
+    
+    <div style="display: flex; flex-direction: column;">
+      <label for="nomFoyer" style="font-weight: bold; color: #333;">Name:</label>
+      <input type="text" id="nomFoyer" [(ngModel)]="newFoyer.nomFoyer" name="nomFoyer" required 
+             style="padding: 8px; border: 1px solid #ddd; border-radius: 4px;" />
+    </div>
+    <div style="display: flex; flex-direction: column;">
+      <label for="capaciteFoyer" style="font-weight: bold; color: #333;">Capacity:</label>
+      <input type="number" id="capaciteFoyer" [(ngModel)]="newFoyer.capaciteFoyer" name="capaciteFoyer" required 
+             style="padding: 8px; border: 1px solid #ddd; border-radius: 4px;" />
+    </div>
+    <button type="submit" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer;">
+      Add Foyer
+    </button>
+  </form>
+</div>
