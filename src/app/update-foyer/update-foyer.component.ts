@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Foyer } from '../models/foyer.model';
 import { FoyerService } from '../services/foyer.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-update-foyer',
@@ -8,21 +9,28 @@ import { FoyerService } from '../services/foyer.service';
   styleUrls: ['./update-foyer.component.css']
 })
 export class UpdateFoyerComponent  implements OnInit {
-  foyer: Foyer;  // Single foyer for update
-  id: string = ''; // ID of the foyer to be updated
+  foyer!: Foyer;  // Single foyer for update
+  idFoyer: string = ''; // ID of the foyer to be updated
 
-  constructor(private foyerService: FoyerService) {
+  constructor(private foyerService: FoyerService, private route: ActivatedRoute) {
     // Initialize with a default empty object, assuming it will be loaded
-    this.foyer = { idFoyer: '', nomFoyer: '', capaciteFoyer: 0 };
+   
   }
 
   ngOnInit(): void {
-    this.loadFoyerById();
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.foyerService.getFoyerById(id).subscribe(data => {
+        this.foyer = data;
+      }, error => {
+        console.error('Error loading the foyer:', error);
+      });
+    }
   }
 
   loadFoyerById(): void {
-    if (this.id) {
-      this.foyerService.getFoyerById(this.id).subscribe(data => {
+    if (this.idFoyer) {
+      this.foyerService.getFoyerById(this.idFoyer).subscribe(data => {
         this.foyer = data;
       }, error => {
         console.error('Error loading the foyer:', error);

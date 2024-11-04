@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: "db"
+      MYSQL_USER: "root"
+      MYSQL_PASSWORD: "AZERTY123456@"
+      MYSQL_ROOT_PASSWORD: "AZERTY123456@"
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  spring-boot-app:
+    image: yosra/tp-foyer:1.0.0
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql:3306/db?createDatabaseIfNotExist=true"
+      SPRING_DATASOURCE_USERNAME: "root"
+      SPRING_DATASOURCE_PASSWORD: "AZERTY123456@"
+      SERVER_PORT: 8089
+      SERVER_SERVLET_CONTEXT_PATH: "/tpfoyer"
+    ports:
+      - "8089:8089"
+    depends_on:
+      - mysql
+
+  angular-app:
+    image: yosra/angular-app:1.0.0
+    ports:
+      - "4201:80"
+    depends_on:
+      - spring-boot-app
+
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9091:9090"
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3001:3000"
+    depends_on:
+      - prometheus
+
+volumes:
+  mysql_data:
