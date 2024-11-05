@@ -38,7 +38,7 @@ services:
     ports:
       - "81:81"
     depends_on:
-      - spring-boot-app
+      - tp-foyer
 
 volumes:
   mysql_data:
