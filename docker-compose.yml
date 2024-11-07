@@ -36,7 +36,7 @@ services:
   angular-app:
     image: shilyosra/angular-app:1.0.0
     ports:
-      - "81:81"
+      - "80:80"
     depends_on:
       - tp-foyer
 
