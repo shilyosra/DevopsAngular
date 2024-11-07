@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class FoyerService {
 
-  private baseUrl = 'http://localhost:8089/tpfoyer/foyer';
+  private baseUrl = 'http://192.168.50.4:8089/tpfoyer/foyer';
 
   constructor(private http: HttpClient) { }
 
